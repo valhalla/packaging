@@ -1,0 +1,31 @@
+Source: libvalhalla
+Priority: optional
+Maintainer: Team Valhalla <valhalla@mapzen.com>
+Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config
+Standards-Version: 3.9.5
+Section: libs
+Homepage: https://github.com/valhalla
+#Vcs-Git: git://github.com/valhalla/
+
+Package: libvalhalla-dev
+Section: contrib/libdevel
+Architecture: any
+Depends: libvalhalla0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Service oriented distributed computing API
+ A set of APIs designed around the zeromq butterfly pattern
+ specifically focused on servicing http requests
+
+Package: libvalhalla0
+Section: contrib/libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Service oriented distributed computing API
+ A set of APIs designed around the zeromq butterfly pattern
+ specifically focused on servicing http requests
+
+Package: valhalla-bin
+Section: contrib/misc
+Architecture: any
+Depends: libvalhalla0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Service oriented distributed computing executables
+ A set of executables for use in running a distributed http service

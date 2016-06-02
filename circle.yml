@@ -1,0 +1,16 @@
+checkout:
+  post:
+    - git submodule sync
+    - git submodule update --init
+
+dependencies:
+  override:
+    - sudo rm -rf /etc/apt/sources.list.d/google*.list
+
+test:
+  override:
+    - build.sh
+
+general:
+  artifacts:
+    - *_build/*.*

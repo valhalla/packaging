@@ -1,0 +1,15 @@
+#!/bin/bash
+function target() {
+	local l=${1}
+	local f=${2}
+	head -n ${l} ${f} | tail -n 1
+	while [ ${l} -lt $(wc -l < ${f}) ]; do
+		((l+=1))
+		local c=$(head -n ${l} ${f} | tail -n 1 | grep -P "^\t" || true)
+		if [ "${c}" == "" ]; then
+			break
+		fi
+		echo -e "${c}"
+	done
+}
+

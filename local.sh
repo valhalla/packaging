@@ -45,10 +45,10 @@ if [[ "${1}" == "--versioned-name" ]]; then
 	echo -e "libvalhalla${VERSION} (${VERSION}-0ubuntu1~${DISTRIB_CODENAME}1) ${DISTRIB_CODENAME}; urgency=low\n" > ${PACKAGE}/debian/changelog
 	for p in $(grep -F Package ${PACKAGE}/debian/control | sed -e "s/.*: //g"); do
 		for ext in .dirs .install; do
-			mv ${PACKAGE}/debian/${p}${ext} ${PACKAGE}/debian/$(echo ${p} | sed -e "s/valhalla/valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}.\1/g")${ext}
+			mv ${PACKAGE}/debian/${p}${ext} ${PACKAGE}/debian/$(echo ${p} | sed -e "s/valhalla/valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g")${ext}
 		done
 	done
-	sed -i -e "s/valhalla/valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}.\1/g" ${PACKAGE}/debian/control
+	sed -i -e "s/valhalla/valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g" ${PACKAGE}/debian/control
 else
 	echo -e "libvalhalla (${VERSION}-0ubuntu1~${DISTRIB_CODENAME}1) ${DISTRIB_CODENAME}; urgency=low\n" > ${PACKAGE}/debian/changelog
 fi

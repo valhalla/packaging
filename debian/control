@@ -18,7 +18,7 @@ Description: Service oriented distributed computing API
 Package: libvalhalla0
 Section: contrib/libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystem1.54.0, libboost-regex1.54.0, libboost-system1.54.0, libboost-thread1.54.0, liblua5.2-0, libprime-server, libspatialite5, libsqlite3-0, libprotobuf8, libcurl3, libgeos-3.4.2, libgeos-c1
+Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystem1.54.0, libboost-regex1.54.0, libboost-system1.54.0, libboost-thread1.54.0, liblua5.2-0, libprime-server0, libspatialite5, libsqlite3-0, libprotobuf8, libcurl3, libgeos-3.4.2, libgeos-c1
 Description: Service oriented distributed computing API
  A set of APIs designed around the zeromq butterfly pattern
  specifically focused on servicing http requests

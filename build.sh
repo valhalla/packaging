@@ -15,7 +15,7 @@ PACKAGE="$(if [[ "${1}" == "--versioned-name" ]]; then echo libvalhalla${VERSION
 declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
 
 #get a bunch of stuff we'll need to  make the packages
-sudo apt-get install -y git dh-make dh-autoreconf bzr-builddeb pbuilder ubuntu-dev-tools debootstrap devscripts
+sudo apt-get install -y git dh-make dh-autoreconf bzr-builddeb pbuilder debootstrap devscripts distro-info
 
 #get valhalla code into the form bzr likes
 ./prepare.sh ${VERSION} ${PACKAGE}

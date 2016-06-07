@@ -9,7 +9,7 @@ VERSION=$(cat version)
 RELEASES=$(cat releases)
 
 #get a bunch of stuff we'll need to  make the packages
-sudo apt-get install -y dh-make dh-autoreconf bzr-builddeb pbuilder ubuntu-dev-tools debootstrap devscripts
+sudo apt-get install -y dh-make dh-autoreconf bzr-builddeb pbuilder debootstrap devscripts distro-info
 #get the stuff we need to build the software
 sudo apt-get install -y autoconf automake pkg-config libtool make gcc g++ lcov
 

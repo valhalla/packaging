@@ -1,7 +1,7 @@
 Source: libvalhalla
 Priority: optional
 Maintainer: Team Valhalla <valhalla@mapzen.com>
-Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config, vim-common, libboost1.54-all-dev, libcurl4-openssl-dev, libgeos-dev, libgeos++-dev, lua5.2, liblua5.2-dev, libprime-server-dev, libprotobuf-dev, libspatialite-dev, libsqlite3-dev, protobuf-compiler
+Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config, vim-common, libboostBOOST_VERSION-all-dev, libcurl4-openssl-dev, libgeos-dev, libgeos++-dev, lua5.2, liblua5.2-dev, libprime-server-dev, libprotobuf-dev, libspatialite-dev, libsqlite3-dev, protobuf-compiler
 Standards-Version: 3.9.5
 Section: libs
 Homepage: https://github.com/valhalla
@@ -10,7 +10,7 @@ Homepage: https://github.com/valhalla
 Package: libvalhalla-dev
 Section: contrib/libdevel
 Architecture: any
-Depends: libvalhalla0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}, libboost1.54-all-dev, liblua5.2-dev, libprime-server-dev, libprotobuf-dev
+Depends: libvalhalla0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}, libboostBOOST_VERSION-all-dev, liblua5.2-dev, libprime-server-dev, libprotobuf-dev
 Description: Service oriented distributed computing API
  A set of APIs designed around the zeromq butterfly pattern
  specifically focused on servicing http requests
@@ -18,7 +18,7 @@ Description: Service oriented distributed computing API
 Package: libvalhalla0
 Section: contrib/libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystem1.54.0, libboost-regex1.54.0, libboost-system1.54.0, libboost-thread1.54.0, liblua5.2-0, libprime-server0, libspatialite5, libsqlite3-0, libprotobuf8, libcurl3, libgeos-3.4.2, libgeos-c1
+Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystemBOOST_VERSION.0, libboost-regexBOOST_VERSION.0, libboost-systemBOOST_VERSION.0, libboost-threadBOOST_VERSION.0, liblua5.2-0, libprime-server0, libspatialite5, libsqlite3-0, libprotobuf8, libcurl3, libgeos-3.4.2, libgeos-c1
 Description: Service oriented distributed computing API
  A set of APIs designed around the zeromq butterfly pattern
  specifically focused on servicing http requests

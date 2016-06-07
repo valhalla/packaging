@@ -19,6 +19,9 @@ DEBEMAIL="valhalla@mapzen.com"
 bzr whoami "${DEBFULLNAME} <${DEBEMAIL}>"
 source /etc/lsb-release
 
+#boost!!!!!!
+declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
+
 #versioned package name
 PACKAGE="$(if [[ "${1}" == "--versioned-name" ]]; then echo libvalhalla${VERSION}; else echo libvalhalla; fi)"
 
@@ -52,6 +55,7 @@ if [[ "${1}" == "--versioned-name" ]]; then
 else
 	echo -e "libvalhalla (${VERSION}-0ubuntu1~${DISTRIB_CODENAME}1) ${DISTRIB_CODENAME}; urgency=low\n" > ${PACKAGE}/debian/changelog
 fi
+sed -i -e "s/BOOST_VERSION/${boost[${DISTRIB_CODENAME}]}/g" ${PACKAGE}/debian/control
 curl https://raw.githubusercontent.com/valhalla/valhalla-docs/master/release-notes.md 2>/dev/null | sed -e "s/^##/*/g" -e "s/^\(.\)/  \1/g" >> ${PACKAGE}/debian/changelog
 echo -e "\n -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -u +"%a, %d %b %Y %T %z")" >> ${PACKAGE}/debian/changelog
 

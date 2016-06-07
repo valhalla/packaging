@@ -11,6 +11,9 @@ VERSION=$(cat version)
 RELEASES=( $(cat releases) )
 PACKAGE="$(if [[ "${1}" == "--versioned-name" ]]; then echo libvalhalla${VERSION}; else echo libvalhalla; fi)"
 
+#boost!!!!!!
+declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
+
 #get a bunch of stuff we'll need to  make the packages
 sudo apt-get install -y git dh-make dh-autoreconf bzr-builddeb pbuilder ubuntu-dev-tools debootstrap devscripts
 
@@ -44,6 +47,7 @@ for release in ${RELEASES[@]}; do
 	else
 		echo -e "libvalhalla (${VERSION}-0ubuntu1~${release}1) ${release}; urgency=low\n" > debian/changelog
 	fi
+	sed -i -e "s/BOOST_VERSION/${boost[${release}]}/g" debian/control
 	curl https://raw.githubusercontent.com/valhalla/valhalla-docs/master/release-notes.md 2>/dev/null | sed -e "s/^##/*/g" -e "s/^\(.\)/  \1/g" >> debian/changelog
 	echo -e "\n -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -u +"%a, %d %b %Y %T %z")" >> debian/changelog
 	debuild -S -uc -sa

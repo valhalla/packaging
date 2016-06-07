@@ -10,7 +10,7 @@ RELEASES=$(cat releases)
 declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
 
 #get the pre install hooks
-hooks/D10addppa
+sudo hooks/D10addppa
 
 #get a bunch of stuff we'll need to  make the packages
 sudo apt-get install -y dh-make dh-autoreconf bzr-builddeb pbuilder debootstrap devscripts distro-info

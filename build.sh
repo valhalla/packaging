@@ -43,7 +43,7 @@ for release in ${RELEASES[@]}; do
 				mv debian/${p}${ext} debian/$(echo ${p} | sed -e "s/valhalla/valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g")${ext}
 			done
 		done
-		sed -i -e "s/valhalla/valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g" debian/control
+		sed -i -e "s/\([b| ]\)valhalla/\1valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g" debian/control
 	else
 		echo -e "libvalhalla (${VERSION}-0ubuntu1~${release}1) ${release}; urgency=low\n" > debian/changelog
 	fi

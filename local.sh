@@ -7,20 +7,19 @@ set -e
 
 VERSION=$(cat version)
 RELEASES=$(cat releases)
+declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
 
 #get a bunch of stuff we'll need to  make the packages
 sudo apt-get install -y dh-make dh-autoreconf bzr-builddeb pbuilder debootstrap devscripts distro-info
 #get the stuff we need to build the software
 sudo apt-get install -y autoconf automake pkg-config libtool make gcc g++ lcov
+sudo apt-get install -y $(grep -F Build-Depends debian/control | sed -e "s/(.*),//g" -e "s/,//g" -e "s/^.*://g" -e "s/BOOST_VERSION/${boost[${DISTRIB_CODENAME}]}/g")
 
 #tell bzr who we are
 DEBFULLNAME="valhalla"
 DEBEMAIL="valhalla@mapzen.com"
 bzr whoami "${DEBFULLNAME} <${DEBEMAIL}>"
 source /etc/lsb-release
-
-#boost!!!!!!
-declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
 
 #versioned package name
 PACKAGE="$(if [[ "${1}" == "--versioned-name" ]]; then echo libvalhalla${VERSION}; else echo libvalhalla; fi)"

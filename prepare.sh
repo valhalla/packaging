@@ -195,6 +195,7 @@ done | tr '\n' ' ' | sed -e "s/\s*$//g" -e "s/\s\+/ \\\\\n/g" | sed -e "s/^/\t/g
 echo >> Makefile.am
 
 #test targets
+echo "TESTS_ENVIRONMENT = LOCPATH=locales" >> Makefile.am
 echo "check_PROGRAMS = \\" >> Makefile.am
 checks=$(wc -l < Makefile.am)
 for r in ${REPOS}; do

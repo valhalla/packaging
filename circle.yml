@@ -13,4 +13,4 @@ test:
 
 general:
   artifacts:
-    - *_build/*.*
+    - "*_build/*.*"

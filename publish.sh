@@ -10,12 +10,12 @@ if [[ "${1}" != "--no-branch" ]]; then
 	bzr init
 	bzr add
 	bzr commit -m "Packaging for ${VERSION}-0ubuntu1."
-	bzr push --overwrite lp:~kevinkreiser/+junk/valhalla_${VERSION}-0ubuntu1
+	bzr push --overwrite bzr+ssh://valhalla-routing@bazaar.launchpad.net/~valhalla-routing/+junk/valhalla_${VERSION}-0ubuntu1
 	popd
 fi
 
 #sign and push each package to launchpad
 for release in ${RELEASES[@]}; do
 	debsign ${release}_build/*source.changes
-	dput ppa:kevinkreiser/valhalla ${release}_build/*source.changes
+	dput ppa:valhalla-routing/valhalla ${release}_build/*source.changes
 done

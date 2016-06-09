@@ -1,0 +1,4 @@
+#!/bin/sh
+apt-get install -y software-properties-common
+add-apt-repository -y ppa:kevinkreiser/prime-server
+apt-get update -o Dir::Etc::sourcelist="sources.list.d/kevinkreiser-prime-server-$(lsb_release -c -s).list" -o APT::Get::List-Cleanup="0"

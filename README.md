@@ -8,4 +8,4 @@ Packaging for debian (ubuntu really). Check out `build.sh` to see how we are now
 What should I do?
 -----------------
 
-This was based of of the `prime_server` [packaging work](https://github.com/kevinkreiser/ppa-libprime-server) so your best bet is to head over there to see if that has relevant examples to get you up and running.
+This was based off of the `prime_server` [packaging work](https://github.com/kevinkreiser/ppa-libprime-server) so your best bet is to head over there to see if that has relevant examples to get you up and running.

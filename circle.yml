@@ -9,8 +9,8 @@ dependencies:
 
 test:
   override:
-    - build.sh
+    - ./build.sh
 
 general:
   artifacts:
-    - "*_build/*.*"
+    - "./*_build/*.*"

@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/valhalla/packaging.svg?style=svg)](https://circleci.com/gh/valhalla/packaging)
+[![Build Status](https://travis-ci.org/valhalla/packaging.svg?branch=master)](https://travis-ci.org/valhalla/packaging)
 
 What is this?
 -------------

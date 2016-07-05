@@ -36,6 +36,7 @@ for release in ${RELEASES[@]}; do
 	#build the dsc and source.change files
 	pushd ${PACKAGE}
 	cp -rp ../../debian .
+        #add the version to the package names
 	if [[ "${1}" == "--versioned-name" ]]; then
 		echo -e "libvalhalla${VERSION} (${VERSION}-0ubuntu1~${release}1) ${release}; urgency=medium\n" > debian/changelog
 		for p in $(grep -F Package debian/control | sed -e "s/.*: //g"); do
@@ -44,12 +45,22 @@ for release in ${RELEASES[@]}; do
 			done
 		done
 		sed -i -e "s/\([b| ]\)valhalla/\1valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g" debian/control
+	#dont add the version to the package names
 	else
 		echo -e "libvalhalla (${VERSION}-0ubuntu1~${release}1) ${release}; urgency=medium\n" > debian/changelog
 	fi
+	#fix the boost version for this release
 	sed -i -e "s/BOOST_VERSION/${boost[${release}]}/g" debian/control
+	#finish off the changelog
 	curl https://raw.githubusercontent.com/valhalla/valhalla-docs/master/release-notes.md 2>/dev/null | sed -e "s/^##/*/g" -e "s/^\(.\)/  \1/g" >> debian/changelog
 	echo -e "\n -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -u +"%a, %d %b %Y %T %z")" >> debian/changelog
+
+	#newer sqlite accesses spatialite differently
+	if [ "${release}" == "xenial" ]; then
+		sed -i -e "s/ libsqlite3/ libsqlite3-mod-spatialite, libsqlite3/g" debian/control
+	fi
+
+	#create and sign the stuff we need to ship the package to launchpad or try building it with pbuilder
 	debuild -S -uc -sa
 	popd
 

@@ -52,9 +52,10 @@ chmod 755 autogen.sh
 
 #copy in the good stuff
 for r in ${REPOS}; do
-	( git clone --quiet --branch ${VERSION} --depth 1 --recursive  https://github.com/valhalla/${r}.git && pushd ${r} && git submodule init && git submodule update && popd ) &
+	git clone --quiet --branch ${VERSION} --depth 1 --recursive  https://github.com/valhalla/${r}.git
 done
 wait
+ls -al meili/valhalla/rapidjson
 for r in ${REPOS}; do
 	for d in ${DIRS}; do
 		if [ -e ${r}/${d} ]; then

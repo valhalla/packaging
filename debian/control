@@ -1,7 +1,7 @@
 Source: libvalhalla
 Priority: optional
 Maintainer: Team Valhalla <valhalla@mapzen.com>
-Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config, vim-common, locales, libboostBOOST_VERSION-all-dev, libcurl4-openssl-dev, libgeos-dev, libgeos++-dev, lua5.2, liblua5.2-dev, libprime-server-dev, libprotobuf-dev, libspatialite-dev, libsqlite3-dev, protobuf-compiler
+Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config, vim-common, locales, libboostBOOST_VERSION-all-dev, libcurl4-openssl-dev, libgeos-dev, libgeos++-dev, lua5.2, liblua5.2-dev, libprime-server-dev, libprotobuf-dev, libspatialite-dev, libsqlite3-dev, protobuf-compiler, jq
 Standards-Version: 3.9.5
 Section: libs
 Homepage: https://github.com/valhalla/

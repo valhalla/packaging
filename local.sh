@@ -46,6 +46,7 @@ EOF
 #bzr will make you a template to fill out but who wants to do that manually?
 rm -rf ${PACKAGE}/debian
 cp -rp ../debian ${PACKAGE}
+#add the version name to the packages
 if [[ "${1}" == "--versioned-name" ]]; then
 	echo -e "libvalhalla${VERSION} (${VERSION}-0ubuntu1~${DISTRIB_CODENAME}1) ${DISTRIB_CODENAME}; urgency=medium\n" > ${PACKAGE}/debian/changelog
 	for p in $(grep -F Package ${PACKAGE}/debian/control | sed -e "s/.*: //g"); do
@@ -54,12 +55,22 @@ if [[ "${1}" == "--versioned-name" ]]; then
 		done
 	done
 	sed -i -e "s/\([b| ]\)valhalla/\1valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g" ${PACKAGE}/debian/control
+#dont add the version name to the packages
 else
 	echo -e "libvalhalla (${VERSION}-0ubuntu1~${DISTRIB_CODENAME}1) ${DISTRIB_CODENAME}; urgency=medium\n" > ${PACKAGE}/debian/changelog
 fi
+
+#fix the boost version for this release
 sed -i -e "s/BOOST_VERSION/${boost[${DISTRIB_CODENAME}]}/g" ${PACKAGE}/debian/control
+
+#finish up the changelog
 curl https://raw.githubusercontent.com/valhalla/valhalla-docs/master/release-notes.md 2>/dev/null | sed -e "s/^##/*/g" -e "s/^\(.\)/  \1/g" >> ${PACKAGE}/debian/changelog
 echo -e "\n -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -u +"%a, %d %b %Y %T %z")" >> ${PACKAGE}/debian/changelog
+
+#newer sqlite accesses spatialite differently
+if [ "${DISTRIB_CODENAME}" == "xenial" ]; then
+	sed -i -e "s/ libsqlite3/ libsqlite3-mod-spatialite, libsqlite3/g" ${PACKAGE}/debian/control
+fi
 
 #add the stuff to the bzr repository
 pushd ${PACKAGE}

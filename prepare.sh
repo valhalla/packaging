@@ -75,9 +75,9 @@ curl 'https://raw.githubusercontent.com/valhalla/valhalla-docs/master/release-no
 
 cat > Makefile.am << EOF
 ACLOCAL_AMFLAGS = -Im4
-AM_LDFLAGS = $(grep -rE "^AM_LDFLAGS" */Makefile.am | sed -e "s/.*=\s*//g" -e "s/ /\n/g" | sort | uniq | tr '\n' ' ')
-AM_CPPFLAGS = $(grep -rE "^AM_CPPFLAGS" */Makefile.am | sed -e "s/.*=\s*//g" -e "s/ /\n/g" | sort | uniq | tr '\n' ' ')
-AM_CXXFLAGS = $(grep -rE "^AM_CXXFLAGS" */Makefile.am | sed -e "s/.*=\s*//g" -e "s/ /\n/g" | sort | uniq | tr '\n' ' ')
+AM_LDFLAGS = $(grep -rE "^AM_LDFLAGS" */Makefile.am | sed -e "s/.*=\s*//g" -e "s/ /\n/g" -e "s/@PTHREAD_[A-Z]\+@//g" | sort | uniq | tr '\n' ' ')
+AM_CPPFLAGS = $(grep -rE "^AM_CPPFLAGS" */Makefile.am | sed -e "s/.*=\s*//g" -e "s/ /\n/g" -e "s/@PTHREAD_[A-Z]\+@//g" | sort | uniq | tr '\n' ' ')
+AM_CXXFLAGS = $(grep -rE "^AM_CXXFLAGS" */Makefile.am | sed -e "s/.*=\s*//g" -e "s/ /\n/g" -e "s/@PTHREAD_[A-Z]\+@//g" | sort | uniq | tr '\n' ' ')
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
 libtool: \$(LIBTOOL_DEPS)
 	\$(SHELL) ./config.status libtool
@@ -175,7 +175,7 @@ echo "bin_PROGRAMS = \\" >> Makefile.am
 bins=$(wc -l < Makefile.am)
 for r in ${REPOS}; do
 	for l in $(grep -nE "^bin_PROGRAMS" ${r}/Makefile.am | sed -e "s/:.*//g"); do
-        	target ${l} ${r}/Makefile.am | sed -e "s/[[:space:]\\\\]*$//g" -e "s/^\s*//g" -e "s/^bin_PROGRAMS[ =]*//g" -e '/^\s*$/d'
+		target ${l} ${r}/Makefile.am | sed -e "s/[[:space:]\\\\]*$//g" -e "s/^\s*//g" -e "s/^bin_PROGRAMS[ =]*//g" -e '/^\s*$/d'
         done
 done | tr '\n' ' ' | sed -e "s/\s*$//g" -e "s/\s\+/ \\\\\n/g" | sed -e "s/^/\t/g" >> Makefile.am
 echo >> Makefile.am
@@ -275,9 +275,9 @@ AX_PROG_LUA([5.2],[],[
 
 AX_LIB_SQLITE3(3.0.0)
 
-if test "x\$SQLITE3_VERSION" = "x"; then 
-  AC_MSG_ERROR(['libsqlite-dev' version >= 3.0.0 is required.  Please install libsqlite-dev.]) 
-fi 
+if test "x\$SQLITE3_VERSION" = "x"; then
+  AC_MSG_ERROR(['libsqlite-dev' version >= 3.0.0 is required.  Please install libsqlite-dev.])
+fi
 
 # Check for Geos library
 AX_LIB_GEOS(3.0.0)

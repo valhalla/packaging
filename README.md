@@ -35,15 +35,15 @@ function tag() {
 export REPOS='midgard baldr sif meili skadi mjolnir odin loki thor tyr tools'
 for f in ${REPOS}; do cd $f; git checkout master; git fetch; git merge origin/master; cd -; done
 for f in ${REPOS}; do cd $f; make test -j; cd -; done
-tag=1.1.0 #SET YOUR TAG HERE
-for r in ${REPOS}; do cd $r; tag 1.0.12 "Release ${tag}"; cd -; done
+new_tag=1.1.0 #SET YOUR TAG HERE
+for r in ${REPOS}; do cd $r; tag ${new_tag} "Release ${new_tag}"; cd -; done
 ```
 
 Now that all the repos are tagged, we'll want to try to use the build script to simulate builds of valhalla on clean versions of our ubuntu codenames that we support. So what we want to do first is build libvalhalla with a version in it. To do that try this:
 
 ```bash
 cd packaging
-echo ${tag} > version
+echo ${new_tag} > version
 ./build.sh --versioned-name
 echo $?
 ```

@@ -13,7 +13,11 @@ This was based off of the `prime_server` [packaging work](https://github.com/kev
 Environment Setup
 -----------------
 
-TODO:
+You need a fingerprint etc to push builds to launchpad, the thing that builds your software and hosts your ppa packages. This is a one time process that you must to so that your computer is configured to interact with launchpad in terms of submitting new packages. Try this:
+
+```bash
+#TODO
+```
 
 libvalhalla builds
 ------------------

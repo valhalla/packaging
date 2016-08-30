@@ -80,6 +80,7 @@ for r in ${REPOS}; do
   ./configure --includedir=${PWD} --libdir=${PWD}/.libs CPPFLAGS="-DBOOST_SPIRIT_THREADSAFE -DBOOST_NO_CXX11_SCOPED_ENUMS"
   make test -j
   tag ${new_tag} "Release ${new_tag}"
+  cd -
 done
 cd -
 rm -rf tmp

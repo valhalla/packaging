@@ -17,6 +17,11 @@ VERSION=$(cat version)
 RELEASES=( $(cat releases) )
 PACKAGE="$(if [[ "${1}" == "--versioned-name" ]]; then echo libvalhalla${VERSION}; else echo libvalhalla; fi)"
 
+#--hookdir although referenced on the internet doesnt work in pbuilder
+#neither do exporting environment variables or any other options so
+#we have to make a .pbuilderrc and HOOKDIR= to it blech
+echo "HOOKDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/hooks" > ${HOME}/.pbuilderrc
+
 #get valhalla code into the form bzr likes
 ./prepare.sh ${VERSION} ${PACKAGE}
 tar pczf ${PACKAGE}_${VERSION}.orig.tar.gz ${PACKAGE}
@@ -70,7 +75,7 @@ for release in ${RELEASES[@]}; do
 	fi
 
 	#try to build a package for it
-	DEB_BUILD_OPTIONS="parallel=$(nproc)" pbuilder-dist ${release} build ${PACKAGE}_${VERSION}-0ubuntu1~${release}1.dsc --hookdir=../hooks
+	DEB_BUILD_OPTIONS="parallel=$(nproc)" pbuilder-dist ${release} build ${PACKAGE}_${VERSION}-0ubuntu1~${release}1.dsc
 	popd
 done
 ######################################################

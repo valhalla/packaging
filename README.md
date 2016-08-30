@@ -82,6 +82,7 @@ for r in ${REPOS}; do
   tag ${new_tag} "Release ${new_tag}"
 done
 cd -
+rm -rf tmp
 ```
 
 Now that all the repos are tagged, we'll want to try to use the build script to simulate builds of valhalla on clean versions of our ubuntu codenames that we support. So what we want to do first is build libvalhalla with a version in it. To do that try this:

@@ -13,10 +13,41 @@ This was based off of the `prime_server` [packaging work](https://github.com/kev
 Environment Setup
 -----------------
 
-You need a fingerprint etc to push builds to launchpad, the thing that builds your software and hosts your ppa packages. This is a one time process that you must to so that your computer is configured to interact with launchpad in terms of submitting new packages. Try this:
+You need a fingerprint etc to push builds to launchpad, the thing that builds your software and hosts your ppa packages. This is a one time process that you must do to use the scripts referenced below to submit new packages. Try this:
 
 ```bash
-#TODO
+#RSA is fine, number of bits is fine, 0 for never expires
+#Valhalla for the name, valhalla@mapzen.com for the email
+#O for okay, enter a memorable password twice
+#random prime gen needs more bytes, open another terminal and do: find /
+gpg --gen-key
+
+#hook up to launch pad by first sending your public key
+gpg --fingerprint valhalla@mapzen.com
+#note the public key in the output:
+#pub    2048R/PUBLIC_KEY_HERE 2016-08-30
+#send the key to ubuntu servers
+gpg --send-keys --keyserver keyserver.ubuntu.com PUBLIC_KEY_HERE
+
+#now we need to log into launchpad, so point your browser here:
+#https://launchpad.net/~/+editpgpkeys
+#paste in the key fingerprint and click import key
+#you'll get an email to the email above
+
+#copy the text from -----BEGIN PGP MESSAGE----- although way to and including -----END PGP MESSAGE----- into a text file lets say a.txt
+#decrypt it with:
+gpg -d a.txt
+
+#notice the last url is a link to enable this key so follow that link
+
+#you'll also want to add your ssh key
+#if you dont already have one (usually in: ~/.ssh/id_rsa.pub) or you dont remember its password create an ssh key with
+ssh-keygen -t rsa
+
+#then go here: https://launchpad.net/~/+editsshkeys
+#and paste the contents of: ~/.ssh/id_rsa.pub into the box and press import key
+
+#you should be clear to submit packages to launchpad now! congrats!
 ```
 
 libvalhalla builds

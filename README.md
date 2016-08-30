@@ -68,8 +68,17 @@ function tag() {
 }
 
 export REPOS='midgard baldr sif meili skadi mjolnir odin loki thor tyr tools'
-for f in ${REPOS}; do cd $f; git checkout master; git fetch; git merge origin/master; cd -; done
-for f in ${REPOS}; do cd $f; make test -j; cd -; done
+mkdir tmp
+cd tmp
+PKG_CONFIG_PATH=$(for r in $REPOS; do echo -n "${PWD}/$r:"; done)
+for r in ${REPOS}; do
+  git clone --recursive --quiet --branch master --depth 1 https://github.com/valhalla/$f.git;
+  cd $r;
+  ./autogen.sh
+  ./configure --includedir=$PWD --libdir=$PWD/.libs CPPFLAGS="-DBOOST_SPIRIT_THREADSAFE -DBOOST_NO_CXX11_SCOPED_ENUMS"
+  make test -j;
+done
+cd -
 new_tag=1.1.0 #SET YOUR TAG HERE
 for r in ${REPOS}; do cd $r; tag ${new_tag} "Release ${new_tag}"; cd -; done
 ```

@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+#get a bunch of stuff we'll need to  make the packages
+sudo apt-get install -y git dh-make dh-autoreconf bzr bzr-builddeb pbuilder debootstrap devscripts distro-info ubuntu-dev-tools
+
+#boost!!!!!!
+declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
+
 #tell bzr who we are
 DEBFULLNAME="valhalla"
 DEBEMAIL="valhalla@mapzen.com"
@@ -10,12 +16,6 @@ source /etc/lsb-release
 VERSION=$(cat version)
 RELEASES=( $(cat releases) )
 PACKAGE="$(if [[ "${1}" == "--versioned-name" ]]; then echo libvalhalla${VERSION}; else echo libvalhalla; fi)"
-
-#boost!!!!!!
-declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
-
-#get a bunch of stuff we'll need to  make the packages
-sudo apt-get install -y git dh-make dh-autoreconf bzr-builddeb pbuilder debootstrap devscripts distro-info
 
 #get valhalla code into the form bzr likes
 ./prepare.sh ${VERSION} ${PACKAGE}

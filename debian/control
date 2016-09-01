@@ -26,7 +26,7 @@ Description: OpenStreetMap Routing API
 Package: valhalla-bin
 Section: contrib/misc
 Architecture: any
-Depends: libvalhalla0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}, prime-server-bin, spatialite-bin
+Depends: libvalhalla0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}, prime-server-bin, spatialite-bin, jq, unzip
 Description: OpenStreetMap Routing Executables
  A set of tools and services used to analyse and compute
  routes on OSM map data

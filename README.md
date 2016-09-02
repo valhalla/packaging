@@ -107,7 +107,7 @@ make test -j$(nproc)
 cd -
 ```
 
-**If you made changes and got those merged in you should go back to the beginning of this process and start again!** Once you've made it here without changing code you are ready to push some builds to launchpad.
+**If you made changes PR those, get them merged and go back to the beginning of this process, tagging the repos again yada yada!** Once you've made it here without changing code you are ready to push some builds to launchpad.
 
 To do this there is a script called `publish.sh` which will make a branch of the code and also push the sources etc to the launchpad build servers. For the first versioned named package we do want to push a branch of code, but for the unversioned one we dont need to. Lets push with a branch to start and then make a build without the version to become the default package:
 

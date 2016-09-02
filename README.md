@@ -95,7 +95,7 @@ echo ${new_tag} > version
 echo $?
 ```
 
-If the return was non zero scroll back look what test or build item failed and get to work. Retag the repos after you've merge any fixes to master. If it passed. Crack open your 32bit virtual box vm clone this repo and run `build.sh` again. If that also had a non zero return stay in your vm and fix whatever precision issue caused the tests to fail. Retag if needed. Otherwise we are ready to push some builds to launchpad.
+If the return was non zero scroll back look what test or build item failed and get to work. Retag the repos after you've merge any fixes to master. If it passed. Crack open your 32bit virtual box vm clone this repo and run `local.sh` which will just get the software and build it directly without pbuilder and all the other stuff. If that also had a non zero return stay in your vm and fix whatever precision issue caused the tests to fail. Retag if needed. Otherwise we are ready to push some builds to launchpad.
 
 To do this there is a script called `publish.sh` which will make a branch of the code and also push the sources etc to the launchpad build servers. For the first versioned named package we do want to push a branch of code, but for the unversioned one we dont need to. Lets push with a branch to start and then make a build without the version to become the default package:
 

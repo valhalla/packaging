@@ -93,6 +93,8 @@ Now that all the repos are tagged, we'll want to try to use the build script to 
 ```bash
 cd packaging
 echo ${new_tag} > version
+git commit -am "new version"
+git push origin master
 ./build.sh --versioned-name
 echo $?
 ```

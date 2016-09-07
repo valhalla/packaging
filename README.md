@@ -62,7 +62,6 @@ function untag() {
 }
 
 function tag() {
-	untag ${1}
 	git tag -a ${1} -m "${2}"
 	git push origin ${1}
 }
@@ -79,6 +78,9 @@ for r in ${REPOS}; do
   ./autogen.sh
   ./configure --includedir=${PWD} --libdir=${PWD}/.libs CPPFLAGS="-DBOOST_SPIRIT_THREADSAFE -DBOOST_NO_CXX11_SCOPED_ENUMS"
   make test -j
+  set +e
+  untag ${new_tag}
+  set -e
   tag ${new_tag} "Release ${new_tag}"
   cd -
 done

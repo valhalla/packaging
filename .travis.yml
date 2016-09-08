@@ -1,8 +1,0 @@
-sudo: required
-dist: trusty
-before_install:
-install:
-before_script:
-script:
-  ./build.sh
-after_failure:

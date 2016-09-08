@@ -95,28 +95,28 @@ cd packaging
 echo ${new_tag} > version
 git commit -am "new version"
 git push origin master
-./build.sh --versioned-name
+./package.sh
 echo $?
 ```
 
-If the return was non zero scroll back look what test or build item failed and get to work. Retag the repos after you've merge any fixes to master. If it passed. Crack open your 32bit virtual box vm clone this repo and run `local.sh` which will just get the software and build it directly without pbuilder and all the other stuff. If that also had a non zero return stay in your vm and fix whatever precision issue caused the tests to fail.
+If the return was non zero scroll back look what test or build item failed and get to work. Retag the repos after you've merge any fixes to master. If it passed crack open your 32bit virtual box vm clone this repo and do the following:
 
 ```bash
-cd local_build/libvalhalla
+./prepare.sh $(cat version) build
+cd build
 ./autogen.sh
 ./configure CPPFLAGS="-DBOOST_SPIRIT_THREADSAFE -DBOOST_NO_CXX11_SCOPED_ENUMS"
 make test -j$(nproc)
-#wait for error
-#vi src/... until your fixed
-cd -
+#if it errored...
+#  vi src or header... make test again... repeat until fixed...
+#else it didn't error
+#  youre done checking 32bit builds
 ```
 
-**If you made changes PR those, get them merged and go back to the beginning of this process, tagging the repos again yada yada!** Once you've made it here without changing code you are ready to push some builds to launchpad.
-
-To do this there is a script called `publish.sh` which will make a branch of the code and also push the sources etc to the launchpad build servers. For the first versioned named package we do want to push a branch of code, but for the unversioned one we dont need to. Lets push with a branch to start and then make a build without the version to become the default package:
+This will just get the software and build it directly without pbuilder and all the other stuff. If that also had a non zero return stay in your vm and fix whatever precision issue caused the tests to fail. **If you made changes PR those (not from the vm), get them merged and go back to the beginning of this process, tagging the repos again yada yada!** Once you've made it here without changing code you are ready to push some builds to launchpad. To do this there is a script called `publish.sh` which will make a branch of the code and also push the sources etc to the launchpad build servers. Note that you cant run `publish.sh` by itself, you have to have successfully ran `package.sh` before hand to create the source packages. Anyway publish it like so:
 
 ```bash
 ./publish.sh
-./build.sh
-./publish.sh --no-branch
 ```
+
+And wait for launchpad to email you. You'll first get an email letting you know whether or not the packages were excepted or rejected. If rejected it will tell you why. If accepted launchpad will build your packages. If they fail you'll get an email, if they pass you'll get no notification.

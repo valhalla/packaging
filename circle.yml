@@ -1,0 +1,16 @@
+checkout:
+  post:
+    - git submodule sync
+    - git submodule update --init
+
+dependencies:
+  override:
+
+test:
+  override:
+    - package.sh
+
+general:
+  artifacts:
+    - ./*_trusty
+    - ./*_xenial

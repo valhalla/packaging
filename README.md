@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/valhalla/packaging.svg?style=svg)](https://circleci.com/gh/valhalla/packaging)
+[![Build Status](https://travis-ci.org/valhalla/packaging.svg?branch=master)](https://travis-ci.org/valhalla/packaging)
 
 What is this?
 -------------
@@ -95,11 +95,9 @@ cd packaging
 echo ${new_tag} > version
 git commit -am "new version"
 git push origin master
-./package.sh
-echo $?
 ```
 
-If the return was non zero scroll back look what test or build item failed and get to work. Retag the repos after you've merge any fixes to master. If it passed crack open your 32bit virtual box vm clone this repo and do the following:
+This will trigger travis to build the packaging for trusty and xenial on 64bit machines. If the build fails you can try this yourself to see why by running `./package.sh` on your own machine. Fix what is wrong and re-tag the stuff like above. If it passes all we need to do is check 32bit machines. So crack open your 32bit virtual box vm, clone this repo and do:
 
 ```bash
 ./prepare.sh $(cat version) build
@@ -113,7 +111,7 @@ make test -j$(nproc)
 #  youre done checking 32bit builds
 ```
 
-This will just get the software and build it directly without pbuilder and all the other stuff. If that also had a non zero return stay in your vm and fix whatever precision issue caused the tests to fail. **If you made changes PR those (not from the vm), get them merged and go back to the beginning of this process, tagging the repos again yada yada!** Once you've made it here without changing code you are ready to push some builds to launchpad. To do this there is a script called `publish.sh` which will make a branch of the code and also push the sources etc to the launchpad build servers. Note that you cant run `publish.sh` by itself, you have to have successfully ran `package.sh` before hand to create the source packages. Anyway publish it like so:
+This will just get the software and build it directly without pbuilder and all the other stuff. If it failed then whatever precision issue caused should be fixed until all the tests pass. **If you made changes PR those (not from the vm), get them merged and go back to the beginning of this process, tagging the repos again yada yada!** Once you've made it here without changing code you are ready to push some builds to launchpad. To do this there is a script called `publish.sh` which will make a branch of the code and also push the sources etc to the launchpad build servers. Anyway, publish it like so:
 
 ```bash
 ./publish.sh

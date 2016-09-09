@@ -68,7 +68,7 @@ for with_version in false true; do
 		cd -
 
 		#only build the one without the version in the name to save time
-		if [[ ${with_version} == false ]]; then
+		if [[ ${with_version} == false && ${NO_BUILD} != true ]]; then
 			#make sure we support this release
 			if [ ! -e ~/pbuilder/${release}-base.tgz ]; then
 				pbuilder-dist ${release} create	

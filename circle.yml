@@ -8,7 +8,7 @@ dependencies:
 
 test:
   override:
-    - package.sh
+    - ./package.sh
 
 general:
   artifacts:

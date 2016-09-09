@@ -5,6 +5,7 @@ checkout:
 
 dependencies:
   override:
+    - sudo apt-get update
 
 test:
   override:

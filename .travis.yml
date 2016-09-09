@@ -4,8 +4,12 @@ before_install:
   - $(grep -F apt package.sh)
 install:
 before_script:
-  - for r in $(cat releases); do pbuilder-dist ${r} create; done
 script:
-  ./package.sh
+  - echo ${RELEASE_CODENAME} > releases
+  - ./package.sh
 after_failure:
 after_success:
+env:
+  matrix:
+    - RELEASE_CODENAME=trusty
+    - RELEASE_CODENAME=xenial

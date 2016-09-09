@@ -31,7 +31,7 @@ for with_version in false true; do
                 target_dir="${release}/$(if [[ ${with_version} == true ]]; then echo pinned; else echo unpinned; fi)"
 		rm -rf ${target_dir}
 		mkdir -p ${target_dir}
-		prepare.sh ${VERSION} ${target_dir}/${PACKAGE}
+		./prepare.sh ${VERSION} ${target_dir}/${PACKAGE}
 		tar -C ${target_dir} -pczf ${target_dir}/${PACKAGE}_${VERSION}.orig.tar.gz ${PACKAGE}
 		rm -rf ${target_dir}/${PACKAGE}
 		tar -C ${target_dir} -pxf ${target_dir}/${PACKAGE}_${VERSION}.orig.tar.gz

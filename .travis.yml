@@ -1,7 +1,6 @@
 sudo: required
 dist: trusty
 before_install:
-  - $(grep -F apt package.sh)
 install:
 before_script:
 script:

@@ -51,9 +51,7 @@ EOF
 chmod 755 autogen.sh
 
 #copy in the good stuff
-for r in ${REPOS}; do
-	git clone --quiet --branch ${VERSION} --depth 1 --recursive  https://github.com/valhalla/${r}.git &
-done
+for r in ${REPOS}; do echo ${r}; done |	xargs -i -n 1 -P $(nproc) git clone --quiet --branch ${VERSION} --depth 1 --recursive  https://github.com/valhalla/{}.git &
 wait
 for r in ${REPOS}; do
 	for d in ${DIRS}; do

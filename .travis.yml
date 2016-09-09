@@ -1,0 +1,8 @@
+sudo: required
+dist: trusty
+before_install:
+install:
+before_script:
+script:
+  ./package.sh
+after_failure:

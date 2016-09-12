@@ -1,14 +1,16 @@
 sudo: required
 dist: trusty
 before_install:
+  - sudo apt-get install -y vagrant virtualbox
+  - vagrant plugin install vagrant-scp
 install:
 before_script:
 script:
-  - echo ${RELEASE_CODENAME} > releases
-  - ./package.sh
+  - if [[ ${BUILD_TYPE} != 32bit ]]; then echo ${BUILD_TYPE} > releases && ./package.sh else vagrant up && vagrant scp ../packaging default:~/. && vagrant provision fi
 after_failure:
 after_success:
 env:
   matrix:
-    - RELEASE_CODENAME=trusty
-    - RELEASE_CODENAME=xenial
+    - BUILD_TYPE=trusty
+    - BUILD_TYPE=xenial
+    - BUILD_TYPE=32bit

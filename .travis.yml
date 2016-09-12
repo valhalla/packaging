@@ -1,7 +1,7 @@
 sudo: required
 dist: trusty
 before_install:
-  - sudo apt-get install -y linux-generic linux-image-generic linux-headers-generic linux-signed-generic
+  - sudo apt-get install -y linux-headers-$(uname -r) 
   - sudo apt-get install -y virtualbox vagrant
 install:
 before_script:

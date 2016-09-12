@@ -44,10 +44,6 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-    # Customize the amount of memory on the VM:
     vb.memory = 4096
     vb.cpus = 2
   end
@@ -67,9 +63,7 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
      set -e
-     if [[ -e packaging ]]; then
-       cd packaging
-       ./local.sh
-     fi
+     cd /vagrant
+     ./local.sh
    SHELL
 end

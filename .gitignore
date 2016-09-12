@@ -1,4 +1,5 @@
 *_build
 *orig.tar.gz
 debian/changelog
-libvalhalla
+trusty
+xenial

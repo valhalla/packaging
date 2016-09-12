@@ -25,7 +25,7 @@ bzr whoami "${DEBFULLNAME} <${DEBEMAIL}>"
 source /etc/lsb-release
 
 #versioned package name
-PACKAGE="$(if [[ "${1}" == "--versioned-name" ]]; then echo libvalhalla${VERSION}; else echo libvalhalla; fi)"
+PACKAGE="libvalhalla"
 
 ######################################################
 #SEE IF WE CAN BUILD THE PACKAGE FOR OUR LOCAL RELEASE

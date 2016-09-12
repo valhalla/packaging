@@ -1,12 +1,14 @@
 sudo: required
 dist: trusty
 before_install:
-  - sudo apt-get install -y linux-headers-$(uname -r) 
-  - sudo apt-get install -y virtualbox vagrant
+  - sudo apt-get install -y linux-headers-$(uname -r)
+  - sudo apt-get install -y virtualbox
+  - wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb
+  - sudo dpkg -i vagrant_1.8.5_x86_64.deb 
 install:
 before_script:
 script:
-  - if [[ ${BUILD_TYPE} != 32bit ]]; then echo ${BUILD_TYPE} > releases && ./package.sh; else vagrant init ubuntu/trusty32 && vagrant up; fi
+  - if [[ ${BUILD_TYPE} != 32bit ]]; then echo ${BUILD_TYPE} > releases && ./package.sh; else vagrant up; fi
 after_failure:
 after_success:
 env:

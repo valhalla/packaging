@@ -5,7 +5,7 @@ before_install:
 install:
 before_script:
 script:
-  - if [[ ${BUILD_TYPE} != 32bit ]]; then echo ${BUILD_TYPE} > releases && ./package.sh else vagrant up fi
+  - if [[ ${BUILD_TYPE} != 32bit ]]; then echo ${BUILD_TYPE} > releases && ./package.sh; else vagrant up; fi
 after_failure:
 after_success:
 env:

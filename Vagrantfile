@@ -44,9 +44,9 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = 4096
-    vb.cpus = 2
-    vb.hwvirtex = off
+    vb.customize["modifyvm", :id, "--memory", "4096"]
+    vb.customize["modifyvm", :id, "--cpus", "2"]
+    vb.customize["modifyvm", :id, "--hwvirtex", "off"]
   end
   #
   # View the documentation for the provider you are using for more

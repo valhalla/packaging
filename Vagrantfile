@@ -14,10 +14,6 @@ Vagrant.configure("2") do |config|
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/trusty32"
 
-  # The time in seconds that Vagrant will wait for the machine to boot and be
-  # accessible. By default this is 300 seconds.
-  config.vm.boot_timeout = 600
-
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -51,6 +47,8 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--memory", 3072]
     vb.customize ["modifyvm", :id, "--cpus", 1]
     vb.customize ["modifyvm", :id, "--hwvirtex", "off"]
+    vb.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
+    vb.customize ["modifyvm", :id, "--nictype2", "Am79C973"]
   #  vb.customize ["modifyvm", :id, "--vtxvpid", "off"]
   #  vb.customize ["modifyvm", :id, "--vtxux", "off"]
   #  vb.customize ["modifyvm", :id, "--pae", "off"]

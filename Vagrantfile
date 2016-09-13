@@ -45,8 +45,11 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 4096]
-    vb.customize ["modifyvm", :id, "--cpus", 2]
+    vb.customize ["modifyvm", :id, "--cpus", 1]
     vb.customize ["modifyvm", :id, "--hwvirtex", "off"]
+    vb.customize ["modifyvm", :id, "--vtxvpid", "off"]
+    vb.customize ["modifyvm", :id, "--vtxux", "off"]
+    vb.customize ["modifyvm", :id, "--pae", "off"]
   end
   #
   # View the documentation for the provider you are using for more

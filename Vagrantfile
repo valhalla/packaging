@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", 4096]
+    vb.customize ["modifyvm", :id, "--memory", 6500]
     vb.customize ["modifyvm", :id, "--cpus", 1]
     vb.customize ["modifyvm", :id, "--hwvirtex", "off"]
     vb.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
@@ -68,10 +68,27 @@ Vagrant.configure("2") do |config|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
   # end
 
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.network "private_network", ip: "192.168.35.25", auto_config: false
+
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
+    ### Create configuration for host-only adapter. In my case eth1
+    # Clear previous setting
+    rm -f /etc/network/interfaces.d/eth1.cfg
+    # Create new setting
+    echo "auto eth1" >> /etc/network/interfaces.d/eth1.cfg
+    echo "iface eth1 inet static" >> /etc/network/interfaces.d/eth1.cfg
+    # ip address should be the same as in a private_network
+    echo "address 192.168.35.25" >> /etc/network/interfaces.d/eth1.cfg
+    echo "netmask 255.255.255.0" >> /etc/network/interfaces.d/eth1.cfg
+    # Restart adapter for apply new setting
+    ifdown eth1 && ifup eth1
+
      set -e
      cd /vagrant
      ./local.sh

@@ -89,8 +89,18 @@ Vagrant.configure("2") do |config|
     # Restart adapter for apply new setting
     ifdown eth1 && ifup eth1
 
-     set -e
-     cd /vagrant
-     ./local.sh
-   SHELL
+    #build valhalla
+    set -e
+    cd /vagrant
+    sudo hooks/D10addppa
+    sudo apt-get install -y dh-make dh-autoreconf bzr-builddeb pbuilder debootstrap devscripts distro-info
+    sudo apt-get install -y git autoconf automake pkg-config libtool make gcc g++ lcov
+    for pkg in $(grep -F Build-Depends debian/control | sed -e "s/(.*),//g" -e "s/,//g" -e "s/^.*://g"); do
+  	  sudo apt-get install -y ${pkg}
+    done
+    cd libvalhalla
+    ./autogen.sh
+    ./configure CPPFLAGS="-DBOOST_SPIRIT_THREADSAFE -DBOOST_NO_CXX11_SCOPED_ENUMS"
+    make -j2
+  SHELL
 end

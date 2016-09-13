@@ -1,19 +1,15 @@
 sudo: required
 dist: trusty
 before_install:
-  - sudo apt-get install -y linux-headers-$(uname -r)
-  - wget http://download.virtualbox.org/virtualbox/5.1.4/virtualbox-5.1_5.1.4-110228~Ubuntu~trusty_amd64.deb
-  - sudo dpkg -i virtualbox-5.1_5.1.4-110228~Ubuntu~trusty_amd64.deb
-  - wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb
-  - sudo dpkg -i vagrant_1.8.5_x86_64.deb 
 install:
 before_script:
 script:
-  - if [[ ${BUILD_TYPE} != 32bit ]]; then echo ${BUILD_TYPE} > releases && ./package.sh; else ./prepare.sh $(cat version) libvalhalla && vagrant up; fi
+  - ./package.sh ${DISTRIBUTION} ${ARCHITECTURE}
 after_failure:
 after_success:
 env:
   matrix:
-    - BUILD_TYPE=trusty
-    - BUILD_TYPE=xenial
-    - BUILD_TYPE=32bit
+    - DISTRIBUTION=trusty
+    - DISTRIBUTION=xenial
+    - ARCHITECTURE=i386
+    - ARCHITECTURE=amd64

@@ -9,7 +9,7 @@ after_failure:
 after_success:
 env:
   matrix:
-    - DISTRIBUTION=trusty
-    - DISTRIBUTION=xenial
-    - ARCHITECTURE=i386
-    - ARCHITECTURE=amd64
+    - DISTRIBUTION=trusty ARCHITECTURE=i386
+    - DISTRIBUTION=xenial ARCHITECTURE=i386
+    - DISTRIBUTION=trusty ARCHITECTURE=i386
+    - DISTRIBUTION=trusty ARCHITECTURE=amd64

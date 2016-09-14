@@ -21,8 +21,10 @@ if [[ -z ${1} ]]; then
 else
 	DISTRIBUTION=${1}
 fi
-if [[ -z ${ARCHITECTURE} ]]; then
+if [[ -z ${2} ]]; then
 	ARCHITECTURE=amd64
+else
+	ARCHITECTURE=${2}
 fi
 
 
@@ -78,7 +80,7 @@ for with_version in false true; do
 	#only build the one without the version in the name to save time
 	if [[ ${with_version} == false && ${NO_BUILD} != true ]]; then
 		#make sure we support this release
-                if [ ! -e ~/pbuilder/${DISTRIBUTION}-${ARCHITECTURE}_result ]; then
+		if [ ! -e ~/pbuilder/${DISTRIBUTION}-${ARCHITECTURE}_result ]; then
 			pbuilder-dist ${DISTRIBUTION} ${ARCHITECTURE} create
 		fi
 

@@ -13,7 +13,7 @@ declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]
 sudo hooks/D10addppa
 
 #get a bunch of stuff we'll need to  make the packages
-sudo apt-get install -y dh-make dh-autoreconf bzr-builddeb pbuilder debootstrap devscripts distro-info
+sudo apt-get install -y git dh-make dh-autoreconf bzr-builddeb pbuilder debootstrap devscripts distro-info
 #get the stuff we need to build the software
 sudo apt-get install -y autoconf automake pkg-config libtool make gcc g++ lcov
 sudo apt-get install -y $(grep -F Build-Depends debian/control | sed -e "s/(.*),//g" -e "s/,//g" -e "s/^.*://g")

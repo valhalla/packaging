@@ -4,11 +4,12 @@ before_install:
 install:
 before_script:
 script:
-  - echo ${RELEASE_CODENAME} > releases
-  - ./package.sh
+  - ./package.sh ${DISTRIBUTION} ${ARCHITECTURE}
 after_failure:
 after_success:
 env:
   matrix:
-    - RELEASE_CODENAME=trusty
-    - RELEASE_CODENAME=xenial
+    - DISTRIBUTION=trusty ARCHITECTURE=i386
+    - DISTRIBUTION=xenial ARCHITECTURE=i386
+    - DISTRIBUTION=trusty ARCHITECTURE=amd64
+    - DISTRIBUTION=xenial ARCHITECTURE=amd64

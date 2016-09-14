@@ -97,24 +97,10 @@ git commit -am "new version"
 git push origin master
 ```
 
-This will trigger travis to build the packaging for trusty and xenial on 64bit machines. If the build fails you can try this yourself to see why by running `./package.sh` on your own machine. Fix what is wrong and re-tag the stuff like above. If it passes all we need to do is check 32bit machines. So crack open your 32bit virtual box vm, clone this repo and do:
+This will trigger travis to build the packages for trusty and xenial for both 32bit and 64bit architectures. If one of the permutations fails you can try it yourself by running something like `./package.sh trusty i386` on your own machine. This would build for trusty on a 32bit architecture. Use `amd64` if you want to test 64bit architiectures. This should let you see what is going wrong with the code. If its a test failure and you need to see the test logs you can login to your pbuilder and manually do stuff but I'd just recommend firing up a vm (if you need to test an architecture or distribution that you don't have). **If you made changes PR those, get them merged and go back to the beginning of this process, tagging the repos again yada yada!** Once you've made it here without changing code you are ready to push some builds to launchpad. To do this there is a script called `publish.sh` which will make a branch of the code and also push the sources etc to the launchpad build servers. Anyway, publish it like so:
 
 ```bash
-./prepare.sh $(cat version) build
-cd build
-./autogen.sh
-./configure CPPFLAGS="-DBOOST_SPIRIT_THREADSAFE -DBOOST_NO_CXX11_SCOPED_ENUMS"
-make test -j$(nproc)
-#if it errored...
-#  vi src or header... make test again... repeat until fixed...
-#else it didn't error
-#  youre done checking 32bit builds
-```
-
-This will just get the software and build it directly without pbuilder and all the other stuff. If it failed then whatever precision issue caused should be fixed until all the tests pass. **If you made changes PR those (not from the vm), get them merged and go back to the beginning of this process, tagging the repos again yada yada!** Once you've made it here without changing code you are ready to push some builds to launchpad. To do this there is a script called `publish.sh` which will make a branch of the code and also push the sources etc to the launchpad build servers. Anyway, publish it like so:
-
-```bash
-./publish.sh
+./publish.sh trusty xenial
 ```
 
 And wait for launchpad to email you. You'll first get an email letting you know whether or not the packages were excepted or rejected. If rejected it will tell you why. If accepted launchpad will build your packages. If they fail you'll get an email, if they pass you'll get no notification.

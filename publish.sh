@@ -9,7 +9,7 @@ IFS=',' read -r -a DISTRIBUTIONS <<< "${1}"
 cd ${DISTRIBUTIONS[0]}/unpinned
 bzr init
 bzr add
-bzr commit -m "Packaging for $(cat version)-0ubuntu1."
+bzr commit -m "Packaging for $(cat ../../version)-0ubuntu1."
 bzr push --overwrite bzr+ssh://valhalla-routing@bazaar.launchpad.net/~valhalla-routing/+junk/valhalla_${VERSION}-0ubuntu1
 cd -
 

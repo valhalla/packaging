@@ -17,34 +17,38 @@ VERSION=$(cat version)
 
 # OPTIONS
 if [[ -z ${1} ]]; then
-	DISTRIBUTION=${DISTRIB_CODENAME}
+	IFS=',' read -r -a DISTRIBUTIONS <<< "${DISTRIB_CODENAME}"
 else
-	DISTRIBUTION=${1}
+	IFS=',' read -r -a DISTRIBUTIONS <<< "${1}"
 fi
 if [[ -z ${2} ]]; then
-	ARCHITECTURE=amd64
+	IFS=',' read -r -a ARCHITECTURES <<< "amd64"
 else
-	ARCHITECTURE=${2}
+	IFS=',' read -r -a ARCHITECTURES <<< "${2}"
 fi
-
 
 #--hookdir although referenced on the internet doesnt work in pbuilder
 #neither do exporting environment variables or any other options so
 #we have to make a .pbuilderrc and HOOKDIR= to it blech
 echo "HOOKDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/hooks" > ${HOME}/.pbuilderrc
 
-#package with version and without, only build one though
-for with_version in false true; do 
-	PACKAGE="$(if [[ ${with_version} == true ]]; then echo libvalhalla${VERSION}; else echo libvalhalla; fi)"
+#can only make the source tarballs once, or launchpad will barf on differing timestamps
+./prepare.sh ${VERSION} libvalhalla
+cp -rp libvalhalla libvalhalla${VERSION}
+tar -pczf libvalhalla_${VERSION}.orig.tar.gz libvalhalla
+tar -pczf libvalhalla${VERSION}_${VERSION}.orig.tar.gz libvalhalla${VERSION}
 
+#for every combination of distribution and architecture with and without a pinned version
+for DISTRIBUTION in ${DISTRIBUTIONS[@]}; do
+for ARCHITECTURE in ${ARCHITECTURES[@]}; do
+for with_version in false true; do
 	#get valhalla code into the form bzr likes
 	target_dir="${DISTRIBUTION}/$(if [[ ${with_version} == true ]]; then echo pinned; else echo unpinned; fi)"
 	rm -rf ${target_dir}
 	mkdir -p ${target_dir}
-	./prepare.sh ${VERSION} ${target_dir}/${PACKAGE}
-	tar -C ${target_dir} -pczf ${target_dir}/${PACKAGE}_${VERSION}.orig.tar.gz ${PACKAGE}
-	rm -rf ${target_dir}/${PACKAGE}
-	tar -C ${target_dir} -pxf ${target_dir}/${PACKAGE}_${VERSION}.orig.tar.gz
+	PACKAGE="$(if [[ ${with_version} == true ]]; then echo libvalhalla${VERSION}; else echo libvalhalla; fi)"
+	cp -rp ${PACKAGE} ${target_dir}
+        cp -rp ${PACKAGE}_${VERSION}.orig.tar.gz ${target_dir}
 	
 	#build the dsc and source.change files
 	cd ${target_dir}/${PACKAGE}
@@ -90,3 +94,8 @@ for with_version in false true; do
 		cd -
 	fi
 done
+done
+done
+
+#cleanup
+rm -rf libvalhalla*

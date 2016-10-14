@@ -56,6 +56,7 @@ libvalhalla builds
 When there's a new version of Valhalla that is ready for release. You'll want to tag all of the repos so that we can make a build from those tags:
 
 ```bash
+#!/bin/bash
 function untag() {
 	git tag -d ${1}
 	git push origin :${1}
@@ -69,6 +70,7 @@ function tag() {
 set -e
 new_tag=1.1.0 #SET YOUR TAG HERE
 export REPOS='midgard baldr sif meili skadi mjolnir odin loki thor tyr tools'
+rm -rf tmp
 mkdir tmp
 cd tmp
 PKG_CONFIG_PATH=$(for r in ${REPOS}; do echo -n "${PWD}/${r}:"; done)
@@ -85,7 +87,6 @@ for r in ${REPOS}; do
   cd -
 done
 cd -
-rm -rf tmp
 ```
 
 Now that all the repos are tagged, we'll want to try to use the build script to simulate builds of valhalla on clean versions of our ubuntu codenames that we support. So what we want to do first is build libvalhalla with a version in it. To do that try this:

@@ -107,8 +107,13 @@ coverage/index.html: coverage.info
 clean-gcno:
 	-find -name '*.gcno' -exec rm -rf {} \\;
 
-clean-local: clean-coverage clean-gcno
+clean-local: clean-coverage clean-gcno clean-genfiles
+else
+clean-local: clean-genfiles
 endif
+
+clean-genfiles:
+	-rm -rf genfiles
 
 EOF
 
@@ -116,7 +121,7 @@ EOF
 #extra targets date_time, lua, locales
 extras=
 for r in ${REPOS}; do
-	for l in $(grep -nE "^src.*:" ${r}/Makefile.am | grep -vF proto | sed -e "s/:.*//g"); do
+	for l in $(grep -nE "^src.*:|^genfiles.*:" ${r}/Makefile.am | grep -vF proto | sed -e "s/:.*//g"); do
 		target ${l} ${r}/Makefile.am >> Makefile.am
 		extras="${extras} $(target ${l} ${r}/Makefile.am | head -n 1 | sed -e "s/:.*//g")"
 	done
@@ -135,7 +140,7 @@ EOF
 cat >> Makefile.am << EOF
 BUILT_SOURCES = \$(patsubst %.proto,src/%.pb.cc,\$(PROTO_FILES)) ${extras}
 nodist_libvalhalla_la_SOURCES = \$(patsubst %.proto,src/%.pb.cc,\$(PROTO_FILES)) ${extras}
-CLEANFILES = \$(patsubst %.proto,valhalla/%.pb.h,\$(PROTO_FILES)) \$(patsubst %.proto,src/%.pb.cc,\$(PROTO_FILES)) ${extras}
+CLEANFILES = \$(patsubst %.proto,valhalla/%.pb.h,\$(PROTO_FILES)) \$(patsubst %.proto,src/%.pb.cc,\$(PROTO_FILES))
 
 EOF
 

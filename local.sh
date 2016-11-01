@@ -6,7 +6,6 @@ set -e
 #section 6. packaging here: http://packaging.ubuntu.com/html/packaging-new-software.html
 
 VERSION=$(cat version)
-RELEASES=$(cat releases)
 declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
 
 #get the pre install hooks

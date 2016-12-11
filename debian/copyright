@@ -2,7 +2,7 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: libvalhalla
 Source: https://github.com/valhalla
 
-Files: debian/*
+Files: *
 Copyright: 2016 Team Valhalla <valhalla@mapzen.com>
 License: BSD-2-clause
  Copyright (c) 2015, Mapzen

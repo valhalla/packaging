@@ -18,7 +18,7 @@ Description: OpenStreetMap Routing API
 Package: libvalhalla0
 Section: contrib/libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystemBOOST_VERSION.0, libboost-regexBOOST_VERSION.0, libboost-systemBOOST_VERSION.0, libboost-threadBOOST_VERSION.0, liblua5.2-0, libprime-server0.4.0, libspatialite5, libspatialite-dev, libsqlite3-0, libprotobuf8, libcurl3, libgeos-3.4.2, libgeos-c1
+Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystemBOOST_VERSION.0, libboost-regexBOOST_VERSION.0, libboost-systemBOOST_VERSION.0, libboost-threadBOOST_VERSION.0, liblua5.2-0, libprime-server0.4.0-0, libspatialite5, libspatialite-dev, libsqlite3-0, libprotobuf8, libcurl3, libgeos-3.4.2, libgeos-c1
 Description: OpenStreetMap Routing API
  A set of routing APIs designed around OSM map data using
  dynamic costing and a tiled data structure

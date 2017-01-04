@@ -1,4 +1,8 @@
 #!/bin/sh
 apt-get install -y software-properties-common
-add-apt-repository -y ppa:kevinkreiser/prime-server
-apt-get update -o Dir::Etc::sourcelist="sources.list.d/kevinkreiser-prime-server-$(lsb_release -c -s).list" -o APT::Get::List-Cleanup="0"
+if [ $(grep -cF trusty /etc/lsb-release) -gt 0 ]; then
+  for repo in libsodium libpgm zeromq3 czmq prime-server; do
+    add-apt-repository -y ppa:kevinkreiser/${repo}
+    apt-get update -o Dir::Etc::sourcelist="sources.list.d/kevinkreiser-${repo}-$(lsb_release -c -s).list" -o APT::Get::List-Cleanup="0"
+  done
+fi

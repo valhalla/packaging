@@ -1,7 +1,8 @@
 Source: libvalhalla
 Priority: optional
 Maintainer: Team Valhalla <valhalla@mapzen.com>
-Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config, vim-common, locales, libboost-all-dev, libcurl4-openssl-dev, libgeos-dev, libgeos++-dev, lua5.2, liblua5.2-dev, libprime-server0.6.1-dev, libprotobuf-dev, libspatialite-dev, libsqlite3-dev, protobuf-compiler, jq
+Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config, vim-common, locales, libboost-all-dev, libcurl4-openssl-dev, libgeos-dev, libgeos++-dev, lua5.2, liblua5.2-dev, libprime-server0.6.1-dev, libprotobuf-dev, libspatialite-dev, libsqlite3-dev, protobuf-compiler, jq, dh-python, python-all-dev
+X-Python-Version: >= 2.6
 Standards-Version: 3.9.5
 Section: libs
 Homepage: https://github.com/valhalla/
@@ -18,7 +19,7 @@ Description: OpenStreetMap Routing API
 Package: libvalhalla0
 Section: contrib/libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystemBOOST_VERSION.0, libboost-regexBOOST_VERSION.0, libboost-systemBOOST_VERSION.0, libboost-threadBOOST_VERSION.0, liblua5.2-0, libprime-server0.6.1-0, libspatialite5, libspatialite-dev, libsqlite3-0, libprotobuf8, libcurl3, libgeos-3.4.2, libgeos-c1
+Depends: ${shlibs:Depends}, ${misc:Depends}, libboost-filesystemBOOST_VERSION.0, libboost-regexBOOST_VERSION.0, libboost-systemBOOST_VERSION.0, libboost-threadBOOST_VERSION.0, libboost-pythonBOOST_VERSION.0, liblua5.2-0, libprime-server0.6.1-0, libspatialite5, libspatialite-dev, libsqlite3-0, libprotobuf8, libcurl3, libgeos-3.4.2, libgeos-c1
 Description: OpenStreetMap Routing API
  A set of routing APIs designed around OSM map data using
  dynamic costing and a tiled data structure
@@ -30,3 +31,13 @@ Depends: libvalhalla0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends},
 Description: OpenStreetMap Routing Executables
  A set of tools and services used to analyse and compute
  routes on OSM map data
+
+Package: python-valhalla
+Section: python
+Architecture: any
+Depends: libvalhalla0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}, libpython2.7
+Description: OpenStreetMap Routing Python Bindings
+ A set routing APIs designed around OSM map data using
+ dynamic costing and a tiled data structure and
+ accompanying tools and services used to analyse and
+ compute routes using those APIs

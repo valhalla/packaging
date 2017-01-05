@@ -66,9 +66,13 @@ sed -i -e "s/BOOST_VERSION/${boost[${DISTRIB_CODENAME}]}/g" ${PACKAGE}/debian/co
 curl https://raw.githubusercontent.com/valhalla/valhalla-docs/master/release-notes.md 2>/dev/null | sed -e "s/^##/*/g" -e "s/^\(.\)/  \1/g" >> ${PACKAGE}/debian/changelog
 echo -e "\n -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -u +"%a, %d %b %Y %T %z")" >> ${PACKAGE}/debian/changelog
 
-#newer sqlite accesses spatialite differently
+#newer dependencies in xenial
 if [ "${DISTRIB_CODENAME}" == "xenial" ]; then
 	sed -i -e "s/ libsqlite3/ libsqlite3-mod-spatialite, libsqlite3/g" ${PACKAGE}/debian/control
+	sed -i -e "s/ libspatialite5/ libspatialite7/g" ${PACKAGE}/debian/control
+	sed -i -e "s/ libprotobuf8/ libprotobuf9v5/g" ${PACKAGE}/debian/control
+	sed -i -e "s/ libgeos-3\.4\.2/ libgeos-3.5.0/g" ${PACKAGE}/debian/control
+	sed -i -e "s/ libgeos-c1/ libgeos-c1v5/g" ${PACKAGE}/debian/control
 fi
 
 #add the stuff to the bzr repository

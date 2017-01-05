@@ -140,12 +140,11 @@ EOF
 cat >> Makefile.am << EOF
 BUILT_SOURCES = \$(patsubst %.proto,src/%.pb.cc,\$(PROTO_FILES)) ${extras}
 nodist_libvalhalla_la_SOURCES = \$(patsubst %.proto,src/%.pb.cc,\$(PROTO_FILES)) ${extras}
-CLEANFILES = \$(patsubst %.proto,valhalla/%.pb.h,\$(PROTO_FILES)) \$(patsubst %.proto,src/%.pb.cc,\$(PROTO_FILES))
+CLEANFILES = \$(patsubst %.proto,valhalla/%.pb.h,\$(PROTO_FILES)) \$(patsubst %.proto,src/%.pb.cc,\$(PROTO_FILES)) \$(EXTRA_PROGRAMS)
 
 EOF
 
 #lib and headers
-#TODO: unclobber generated valhalla.h with midgards
 echo "lib_LTLIBRARIES = libvalhalla.la
 nobase_include_HEADERS = \\" >> Makefile.am
 for r in ${REPOS}; do
@@ -171,6 +170,20 @@ echo >> Makefile.am
 #libs to link
 sed -e "s/^libvalhalla_.*_la_LIBADD\s*=\s*//;tx;d;:x" */Makefile.am | tr ' ' '\n' | grep -vF VALHALLA | sort | uniq | tr '\n' ' ' | sed -e "s/^/libvalhalla_la_LIBADD = /g" >> Makefile.am
 echo >> Makefile.am
+echo >> Makefile.am
+
+#python bindings
+echo "pyexec_LTLIBRARIES = \\" >> Makefile.am
+modules=$(wc -l < Makefile.am)
+for r in ${REPOS}; do
+        for l in $(grep -nE "^pyexec_LTLIBRARIES" ${r}/Makefile.am | sed -e "s/:.*//g"); do
+                target ${l} ${r}/Makefile.am | sed -e "s/[[:space:]\\\\]*$//g" -e "s/^\s*//g" -e "s/^pyexec_LTLIBRARIES[ =]*//g" -e '/^\s*$/d'
+        done
+done | tr '\n' ' ' | sed -e "s/\s*$//g" -e "s/\s\+/ \\\\\n/g" | sed -e "s/^/\t/g" >> Makefile.am
+echo >> Makefile.am
+for e in $(target ${modules} Makefile.am | grep -vF pyexec_LTLIBRARIES | sed -e "s/[[:space:]\\]*//g" -e "s/\./_/g"); do
+        grep -hE "^${e}_[A-Z]" */Makefile.am | sed -e "s/libvalhalla_[a-z]\+\.la//g" -e "s/ [^[:space:]]\+VALHALLA_DEPS[^[:space:]]\+//g" -e "s/\(.*LIBADD.*\)/\1 libvalhalla.la/g" >> Makefile.am
+done
 echo >> Makefile.am
 
 #executable targets
@@ -256,8 +269,15 @@ AC_LANG_CPLUSPLUS
 # require c++11
 AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
 
+# require pthread
+AX_PTHREAD(, [AC_MSG_ERROR([cannot find libpthread])])
+
 # check for protocol buffers compiler and libraries
 REQUIRE_PROTOC
+
+# we require python dev headers
+AX_PYTHON_DEVEL([>= '2.7'])
+AM_PATH_PYTHON([2.7],,)
 
 # check for boost and make sure we have the program options library
 AX_BOOST_BASE([1.54], , [AC_MSG_ERROR([cannot find Boost libraries, which are are required for building valhalla. Please install libboost-all-dev.])])
@@ -267,6 +287,7 @@ AX_BOOST_THREAD
 AX_BOOST_FILESYSTEM
 AX_BOOST_REGEX
 AX_BOOST_DATE_TIME
+AX_BOOST_PYTHON
 
 # check for Lua libraries and headers
 AX_PROG_LUA([5.2],[],[

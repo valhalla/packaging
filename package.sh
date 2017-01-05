@@ -72,9 +72,13 @@ for with_version in false true; do
 	curl https://raw.githubusercontent.com/valhalla/valhalla-docs/master/release-notes.md 2>/dev/null | sed -e "s/^##/*/g" -e "s/^\(.\)/  \1/g" >> debian/changelog
 	echo -e "\n -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -u +"%a, %d %b %Y %T %z")" >> debian/changelog
 
-	#newer sqlite accesses spatialite differently
+	#newer packages in xenial
 	if [ "${DISTRIBUTION}" == "xenial" ]; then
 		sed -i -e "s/ libsqlite3/ libsqlite3-mod-spatialite, libsqlite3/g" debian/control
+		sed -i -e "s/ libspatialite5/ libspatialite7/g" debian/control
+		sed -i -e "s/ libprotobuf8/ libprotobuf9v5/g" debian/control
+		sed -i -e "s/ libgeos-3\.4\.2/ libgeos-3.5.0/g" debian/control
+		sed -i -e "s/ libgeos-c1/ libgeos-c1v5/g" debian/control
 	fi
 
 	#create and sign the stuff we need to ship the package to launchpad or try building it with pbuilder

@@ -61,7 +61,7 @@ for with_version in false true; do
 				mv debian/${p}${ext} debian/$(echo ${p} | sed -e "s/valhalla/valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g")${ext}
 			done
 		done
-		sed -i -e "s/\([b| ]\)valhalla/\1valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g" debian/control
+		sed -i -e "s/\([b| |\-]\)valhalla/\1valhalla${VERSION}/g" -e "s/valhalla${VERSION}\([0-9]\+\)/valhalla${VERSION}-\1/g" debian/control
 	#dont add the version to the package names
 	else
 		echo -e "libvalhalla (${VERSION}-0ubuntu1~${DISTRIBUTION}1) ${DISTRIBUTION}; urgency=medium\n" > debian/changelog

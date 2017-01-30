@@ -288,24 +288,12 @@ AX_BOOST_FILESYSTEM
 AX_BOOST_REGEX
 AX_BOOST_DATE_TIME
 
-# if we wanted python bindings
-AC_ARG_ENABLE([python_bindings],
-    [  --enable-python-bindings    Create python bindings],
-    [case "\${enableval}" in
-        yes) python_bindings=true ;;
-        no)  python_bindings=false ;;
-        *) AC_MSG_ERROR([bad value \${enableval} for --enable-python-bindings]) ;;
-    esac],[python_bindings=false])
-AM_CONDITIONAL([PYTHON_BINDINGS], [test x\$python_bindings = xtrue])
-
 # then we require python dev headers and boost python
-AM_COND_IF([PYTHON_BINDINGS], [
     AX_PYTHON_DEVEL([>= '2.7'])
     AM_PATH_PYTHON([2.7],,)
     AX_BOOST_PYTHON
     AS_IF([test "x\$BOOST_PYTHON_LIB" == "x"],
           [AC_MSG_ERROR([Boost::Python library not detected, please install libboost-python-dev.])],)
-])
 
 
 # check for Lua libraries and headers

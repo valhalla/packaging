@@ -2,14 +2,15 @@
 # -*- makefile -*-
 
 # Uncomment this to turn on verbose mode.
-export DH_VERBOSE=1
-
-# We want python bindings please
-export DEB_CONFIGURE_EXTRA_FLAGS=--enable-static
+DH_VERBOSE = 1
 
 #do everything parallel
 %:
 	dh $@  --parallel --list-missing --with autoreconf
+
+#we need static libs too
+override_dh_auto_configure:
+	dh_auto_configure -- --enable-static
 
 #except install because python module depends on main library and somehow dependency is not known
 override_dh_auto_install:

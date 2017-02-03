@@ -1,5 +1,8 @@
 sudo: required
 dist: trusty
+cache:
+  directories:
+    - pbuilder
 before_install:
 install:
 before_script:

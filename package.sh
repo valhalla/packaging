@@ -33,7 +33,7 @@ fi
 echo "HOOKDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/hooks" > ${HOME}/.pbuilderrc
 
 #can only make the source tarballs once, or launchpad will barf on differing timestamps
-./prepare.sh ${VERSION} libvalhalla
+git clone --branch ${VERSION} --recursive https://github.com/valhalla/valhalla.git libvalhalla
 cp -rp libvalhalla libvalhalla${VERSION}
 tar -pczf libvalhalla_${VERSION}.orig.tar.gz libvalhalla
 tar -pczf libvalhalla${VERSION}_${VERSION}.orig.tar.gz libvalhalla${VERSION}

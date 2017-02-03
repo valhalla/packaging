@@ -31,7 +31,7 @@ PACKAGE="libvalhalla"
 rm -rf local_build
 mkdir local_build
 #get pieces of code into the form bzr likes
-./prepare.sh ${VERSION} local_build/${PACKAGE}
+git clone --branch ${VERSION} --recursive https://github.com/valhalla/valhalla.git libvalhalla
 pushd local_build
 tar pczf ${PACKAGE}.tar.gz ${PACKAGE}
 rm -rf ${PACKAGE}

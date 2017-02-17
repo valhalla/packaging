@@ -34,6 +34,8 @@ echo "HOOKDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/hooks" > ${HOME}
 
 #can only make the source tarballs once, or launchpad will barf on differing timestamps
 git clone --branch ${VERSION} --recursive https://github.com/valhalla/valhalla.git libvalhalla
+#remove superfluous stuff
+rm -rf libvalhalla/test_requests libvalhalla/run_route_scripts libvalhalla/gtfs libvalhalla/docker
 cp -rp libvalhalla libvalhalla${VERSION}
 tar -pczf libvalhalla_${VERSION}.orig.tar.gz libvalhalla
 tar -pczf libvalhalla${VERSION}_${VERSION}.orig.tar.gz libvalhalla${VERSION}

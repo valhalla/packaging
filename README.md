@@ -17,13 +17,13 @@ You need a fingerprint etc to push builds to launchpad, the thing that builds yo
 
 ```bash
 #RSA is fine, number of bits is fine, 0 for never expires
-#Valhalla for the name, valhalla@mapzen.com for the email
+#Your name for the name, your email for the email, these should be the same as ${DEBFULLNAME} and ${DEBEMAIL}
 #O for okay, enter a memorable password twice
 #random prime gen needs more bytes, open another terminal and do: find /
 gpg --gen-key
 
 #hook up to launch pad by first sending your public key
-gpg --fingerprint valhalla@mapzen.com
+gpg --fingerprint ${DEBEMAIL}
 #note the public key in the output:
 #pub    2048R/PUBLIC_KEY_HERE 2016-08-30
 #send the key to ubuntu servers
@@ -48,12 +48,13 @@ ssh-keygen -t rsa
 #and paste the contents of: ~/.ssh/id_rsa.pub into the box and press import key
 
 #you should be clear to submit packages to launchpad now! congrats!
+#note that you'll need to become a member of the `valhalla-core` team to push packages to our PPA, enquire inside ;o)
 ```
 
 libvalhalla builds
 ------------------
 
-When there's a new version of Valhalla that is ready for release. You'll want to tag all of the repos so that we can make a build from those tags:
+When there's a new version of Valhalla that is ready for release. You'll want to tag the repo so that we can make a build from those tags:
 
 ```bash
 #!/bin/bash
@@ -82,7 +83,7 @@ tag ${new_tag} "Release ${new_tag}"
 cd -
 ```
 
-Now that all the repos are tagged, we'll want to try to use the build script to simulate builds of valhalla on clean versions of our ubuntu codenames that we support. So what we want to do first is build libvalhalla with a version in it. To do that try this:
+Now that all the repo is tagged, we'll want to try to use the build script to simulate builds of valhalla on clean versions of our ubuntu codenames that we support. So what we want to do first is build libvalhalla with a version in it. To do that try this:
 
 ```bash
 cd packaging

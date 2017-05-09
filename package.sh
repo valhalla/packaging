@@ -7,9 +7,9 @@ sudo apt-get install -y git dh-make dh-autoreconf bzr bzr-builddeb pbuilder debo
 #boost!!!!!!
 declare -A boost=( ["trusty"]="1.54" ["vivid"]="1.55" ["wily"]="1.58" ["xenial"]="1.58" )
 
-#tell bzr who we are
-DEBFULLNAME="valhalla"
-DEBEMAIL="valhalla@mapzen.com"
+#tell bzr who we are or default
+: ${DEBFULLNAME:="Team Valhalla"}
+: ${DEBEMAIL:="valhalla@mapzen.com"}
 bzr whoami "${DEBFULLNAME} <${DEBEMAIL}>"
 source /etc/lsb-release
 

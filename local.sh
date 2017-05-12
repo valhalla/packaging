@@ -17,9 +17,9 @@ sudo apt-get install -y git dh-make dh-autoreconf bzr-builddeb pbuilder debootst
 sudo apt-get install -y autoconf automake pkg-config libtool make gcc g++ lcov
 sudo apt-get install -y $(grep -F Build-Depends debian/control | sed -e "s/(.*),//g" -e "s/,//g" -e "s/^.*://g")
 
-#tell bzr who we are
-DEBFULLNAME="valhalla"
-DEBEMAIL="valhalla@mapzen.com"
+#tell bzr who we are or default
+: ${DEBFULLNAME:="Team Valhalla"}
+: ${DEBEMAIL:="valhalla@mapzen.com"}
 bzr whoami "${DEBFULLNAME} <${DEBEMAIL}>"
 source /etc/lsb-release
 

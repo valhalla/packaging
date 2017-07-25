@@ -5,6 +5,7 @@ cache:
   directories:
     - ~/pbuilder
 before_install:
+  - sudo apt-get -q update
 install:
 before_script:
 script:

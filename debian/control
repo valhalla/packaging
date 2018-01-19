@@ -1,7 +1,7 @@
 Source: libvalhalla
 Priority: optional
 Maintainer: Team Valhalla <valhalla@mapzen.com>
-Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config, vim-common, locales, libboost-all-dev, libcurl4-openssl-dev, libgeos-dev, libgeos++-dev, lua5.2, liblua5.2-dev, liblz4-dev, zlibg1-dev, libprime-server0.6.3-dev, libprotobuf-dev, libspatialite-dev, libsqlite3-dev, protobuf-compiler, jq, dh-python, python-all-dev
+Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config, vim-common, locales, libboost-all-dev, libcurl4-openssl-dev, libgeos-dev, libgeos++-dev, lua5.2, liblua5.2-dev, zlib1g-dev, liblz4-dev, libprime-server0.6.3-dev, libprotobuf-dev, libspatialite-dev, libsqlite3-dev, protobuf-compiler, jq, dh-python, python-all-dev
 X-Python-Version: >= 2.6
 Standards-Version: 3.9.5
 Section: libs

@@ -14,5 +14,5 @@ after_failure:
 after_success:
 env:
   matrix:
-    - DISTRIBUTIONS=xenial ARCHITECTURES=i386
-    - DISTRIBUTIONS=xenial ARCHITECTURES=amd64
+    - DISTRIBUTION=xenial ARCHITECTURE=i386
+    - DISTRIBUTION=xenial ARCHITECTURE=amd64
